@@ -1,1 +1,71 @@
+===================================================================================================================
+task 1
+===================================================================================================================
+(clear)
 
+(deftemplate individual
+   (slot hair-color))
+
+(defrule check_color
+   (individual (hair-color ?c&~black&~brown))
+   =>
+   (printout t "Hair color is: " ?c crlf))
+
+(assert (individual (hair-color blonde)))
+(assert (individual (hair-color red)))
+(assert (individual (hair-color black)))
+(assert (individual (hair-color brown)))
+
+(run)
+
+/*
+Hair color is: blonde
+Hair color is: red
+*/
+
+(facts)
+
+/*
+f-0     (initial-fact)
+f-1     (individual (hair-color blonde))
+f-2     (individual (hair-color red))
+f-3     (individual (hair-color black))
+f-4     (individual (hair-color brown))
+For a total of 5 facts.
+*/
+===================================================================================================================
+task 2
+===================================================================================================================
+(clear)
+
+(deftemplate person
+   (multislot name
+      (type SYMBOL STRING)
+      (cardinality 2 4))
+   (slot age
+      (type INTEGER)
+      (range 20 25)))
+
+(defrule print-person
+   ?p <- (person (name ?fname ?lname) (age ?age))
+   =>
+   (printout t "Name: " ?fname " " ?lname ", Age: " ?age crlf))
+
+(assert (person (name "Abdulrahman" "Eltawel") (age 22)))
+(assert (person (name "Mohamed" "Saeed") (age 20)))
+
+(run)
+
+/*
+Name: Abdulrahman Eltawel, Age: 22
+Name: Mohamed Saeed, Age: 20
+*/
+
+(facts)
+
+/*
+f-0     (initial-fact)
+f-1     (person (name "Abdulrahman" "Eltawel") (age 22))
+f-2     (person (name "Mohamed" "Saeed") (age 20))
+For a total of 3 facts.
+*/
